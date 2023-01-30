@@ -1,31 +1,40 @@
-﻿namespace FibonacciRecursion
+﻿using System.Diagnostics.Metrics;
+
+namespace FibonacciRecursion
 {
     internal class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             Console.WriteLine("Hello, how many numbers of the fibonacci sequence would you like to receive?");
-            var howMany = Convert.ToInt32(Console.ReadLine());
-
+            int howMany = Convert.ToInt32(Console.ReadLine());
+            int[] arr = new int[howMany];
             Console.WriteLine("you'd like to receive " + howMany + " back.");
+            FibonaciCalculations(arr, 0, howMany);
+
+            Console.WriteLine(string.Join(",", arr));
         }
 
-        static int FibonaciCalculations(int howMany)
+        static void FibonaciCalculations(int[] arr, int start, int end)
         {
-            int count = 0;
-            while (count < howMany)
+            if (start == end)
             {
-                //declaration
-                int i = 0;
-                int j = i - 1;
-                int[] fibonacci = new int[i];
-
-
-                int next = fibonacci[i] + fibonacci[j];
-                FibonaciCalculations(i);
+                return;
             }
-
-            return howMany;
+            if (start == 0)
+            {
+                arr[start] = 1;
+                FibonaciCalculations(arr, start + 1, end);
+            }
+            else if (start == 1)
+            {
+                arr[start] = 1;
+                FibonaciCalculations(arr, start+1, end);
+            } else
+            {
+                arr[start] = arr[start - 1] + arr[start - 2];
+                FibonaciCalculations(arr, start + 1, end);
+            }
         }
     }
 }
